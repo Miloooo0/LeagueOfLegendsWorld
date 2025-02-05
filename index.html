@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería de Campeones</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-image: url("img/others/fondoLeague.webp");
+            background-size: cover; 
+            background-position: center;
+            background-repeat: no-repeat; 
+            background-attachment: fixed; 
+            width: 100vw;
+            height: 100vh;
+        }
+        .headnav{
+            background-image: url("img/others/banneriarec.png");
+            background-size: contain;
+            background-position: center;
+            z-index: -100;
+        }
+        header {
+            height: 20vh;
+            text-align: center;
+            align-content: center;
+            color: white;
+            font-size: 80px;
+            font-weight: bold;
+            padding: 15px;
+        }   
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            background-position: bottom;
+            padding: 10px;
+        }
+        .region-button {
+            background-color: #002147;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.5s ease;
+        }
+        .region-button:hover {
+            background-color: #bdc001;
+        }
+        .region-button.active {
+            background-color: #555700;
+            color: white;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .champion-container {
+            background-color: #f5f5f5 ;
+            width: 400px;
+            height: auto;
+            margin: 10px;
+            overflow: hidden;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            transition: transform 0.3s ease, border-color 0.5s ease;
+            text-align: center;
+        }
+
+        .champion-container:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+        }
+        .champion-container img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-bottom: 2px solid #ccc;
+            opacity: 0;
+            transition: filter 0.5s ease;
+        }
+        .champion-name {
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        .loading-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid #002147;
+            border-radius: 50%;
+            animation: spin 0.5s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        .suZona img {
+            filter: sepia(100%) contrast(150%);
+        }
+        .suZona {
+            border-color: gold;
+            cursor: pointer;
+        }
+        #video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        #video-container {
+            position: relative;
+            background: transparent;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        #video-container iframe {
+            width: 60vw;
+            height: 80vh;
+            border: none;
+        }
+        #close-message {
+            color: white;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="headnav">
+        <header></header>   
+        <nav></nav>
+    </div>
+    <div class="container"></div>
+    <div id="video-overlay">
+        <div id="video-container">
+            <iframe id="video-frame" src="" allowfullscreen></iframe>
+        </div>
+        <div id="close-message">PULSAR FUERA DEL VIDEO Y LUEGO ESC PARA SALIR</div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            let regiones = ["Runaterra", "Noxus", "Demacia", "Ixtal", "Islas de las Sombras", "Jonia", "Piltover", "Zaun", "Freljord", "Shurima", "Targon", "Aguas Estancadas", "El Vacío", "Ciudad de Bandle"];
+            let campeones = [];
+            
+            function generarNav() {
+                let nav = $("nav");
+                nav.empty();
+                regiones.forEach(region => {
+                    let boton = $('<button class="region-button">' + region + '</button>');
+                    // boton.click(() => resaltarCampeones(region));
+                    boton.click(function () {
+                        $(".region-button").removeClass("active");
+                        $(this).addClass("active");
+                        resaltarCampeones(region);
+                    });
+                    nav.append(boton);
+                });
+            }
+            
+            function resaltarCampeones(regionSeleccionada) {
+                $(".champion-container").removeClass("suZona");
+                campeones.forEach(function(champion, index) {
+                    if (champion.zona === regionSeleccionada) {
+                        $(".champion-container").eq(index).addClass("suZona");
+                    }
+                });
+            }
+            
+            generarNav();
+            
+            $.ajax({
+                type: "GET",
+                url: "campeones.json",
+                dataType: "json",
+                success: function (data) {
+                    if (Array.isArray(data.campeones)) {
+                        campeones = data.campeones;
+                        showChampions(data.campeones);
+                    } else {
+                        alert("Formato de datos incorrecto.");
+                    }
+                }
+            });
+
+            function showChampions(champions) {
+                let container = $(".container");
+                container.empty();
+                champions.forEach(function(champion, index) {
+                    let championElement = $('<div class="champion-container" data-index="' + index + '">' +
+                        '<div class="loading-spinner"></div>' +
+                        '<img src="' + champion.imagen + '" alt="' + champion.nombre + '">' +
+                        '<div class="champion-name">' + champion.nombre + '</div>' +
+                        '</div>');
+                    
+                    let img = championElement.find("img");
+                    img.on("load", function () {
+                        championElement.find(".loading-spinner").remove();
+                        $(this).css("opacity", "1");
+                    });
+                    container.append(championElement);
+                });
+
+                $(".champion-container").click(function () {
+                    if ($(this).hasClass("suZona")) {
+                        let index = $(this).data("index");
+                        let videoUrl = campeones[index].enlace + "&autoplay=1" + "&mute=1";
+                        $("#video-frame").attr("src", videoUrl);
+                        $("#video-overlay").fadeIn();
+                    }
+                });
+                
+            }
+            $(document).keydown(function (e) {
+                if (e.key === "Escape") {
+                    $("#video-overlay").fadeOut();
+                    $("#video-frame").attr("src", "");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

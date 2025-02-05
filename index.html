@@ -20,7 +20,7 @@
             height: 100vh;
         }
         .headnav{
-            background-image: url("img/others/banneriarec.png");
+            background-image: url("img/others/bannerlol.png");
             background-size: contain;
             background-position: center;
             z-index: -100;
@@ -147,6 +147,20 @@
             font-size: 18px;
             margin-top: 10px;
         }
+
+        @media screen and (max-width: 768px) {
+            #video-container {
+            position: relative;
+            background: transparent;
+            padding: 20px;
+            border-radius: 10px;
+            }
+            #video-container iframe {
+                width: 60vw;
+                height: 30vh;
+                border: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -159,7 +173,7 @@
         <div id="video-container">
             <iframe id="video-frame" src="" allowfullscreen></iframe>
         </div>
-        <div id="close-message">PULSAR FUERA DEL VIDEO O ESC PARA SALIR</div>
+        <div id="close-message">TOCA FUERA DEL VIDEO O ESC PARA SALIR</div>
     </div>
     <script>
         $(document).ready(function () {
@@ -171,7 +185,6 @@
                 nav.empty();
                 regiones.forEach(region => {
                     let boton = $('<button class="region-button">' + region + '</button>');
-                    // boton.click(() => resaltarCampeones(region));
                     boton.click(function () {
                         $(".region-button").removeClass("active");
                         $(this).addClass("active");

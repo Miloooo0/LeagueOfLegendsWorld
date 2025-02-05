@@ -159,7 +159,7 @@
         <div id="video-container">
             <iframe id="video-frame" src="" allowfullscreen></iframe>
         </div>
-        <div id="close-message">PULSAR FUERA DEL VIDEO Y LUEGO ESC PARA SALIR</div>
+        <div id="close-message">PULSAR FUERA DEL VIDEO O ESC PARA SALIR</div>
     </div>
     <script>
         $(document).ready(function () {
@@ -239,6 +239,11 @@
                     $("#video-overlay").fadeOut();
                     $("#video-frame").attr("src", "");
                 }
+            });
+
+            $(document).mousedown(function (e) {    
+                $("#video-overlay").fadeOut();
+                $("#video-frame").attr("src", "");
             });
         });
     </script>

@@ -25,6 +25,13 @@
             background-position: center;
             z-index: -100;
         }
+        .menu-toggle {
+            display: none;
+        }
+        .dropdown-menu {
+            display: none;
+        }
+        
         header {
             height: 20vh;
             text-align: center;
@@ -34,11 +41,10 @@
             font-weight: bold;
             padding: 15px;
         }   
-        nav {
+        .big-screen {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            background-position: bottom;
             padding: 10px;
         }
         .region-button {
@@ -76,7 +82,7 @@
             transition: transform 0.3s ease, border-color 0.5s ease;
             text-align: center;
         }
-
+        
         .champion-container:hover {
             transform: scale(1.1);
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
@@ -147,27 +153,97 @@
             font-size: 18px;
             margin-top: 10px;
         }
-
+        
         @media screen and (max-width: 768px) {
+            header {
+                height: 10vh;
+                text-align: center;
+                align-content: center;
+                color: white;
+                font-size: 80px;
+                font-weight: bold;
+                padding: 15px;
+            }   
+            
+            .big-screen {
+                display: none;
+            }
+            
+            .menu-toggle {
+                display: block;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .dropdown-menu {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 10px;
+            }
             #video-container {
-            position: relative;
-            background: transparent;
-            padding: 20px;
-            border-radius: 10px;
+                position: relative;
+                background: transparent;
+                padding: 20px;
+                border-radius: 10px;
             }
             #video-container iframe {
                 width: 60vw;
                 height: 30vh;
                 border: none;
             }
+            
+            .burger {
+                width: 40px;
+                height: 40px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                user-select: none;
+                cursor: pointer;
+                transition: 300ms;
+                border-radius: 10px;
+            }
+            .burger::before,
+            .burger::after {
+                content: "";
+                transition: 300ms;
+                transform-origin: center center;
+            }
+            .burger::before {
+                transform: translateY(8px);
+            }
+            .burger::after {
+                transform: translateY(-8px);
+            }
+            .burger .line,
+            .burger::before,
+            .burger::after {
+                width: 25px;
+                height: 2.1px;
+                display: block;
+                background-color: black;
+                border-radius: 5px;
+                position: absolute;
+            }
+            
         }
     </style>
 </head>
 <body>
     <div class="headnav">
-        <header></header>   
-        <nav></nav>
+        <header></header>
+        <nav class="big-screen"></nav>
     </div>
+    <div class="menu-toggle">
+        <div class="burger-icon">
+            <label class="burger" for="burger">
+                <div class="line" type="checkbox" id="burger"> </div>
+            </label>
+        </div>
+    </div>
+    <nav class="dropdown-menu"></nav>    
     <div class="container"></div>
     <div id="video-overlay">
         <div id="video-container">
@@ -211,14 +287,14 @@
                 dataType: "json",
                 success: function (data) {
                     if (Array.isArray(data.campeones)) {
-                        campeones = data.campeones;
+                        campeones = data.campeones; 
                         showChampions(data.campeones);
                     } else {
                         alert("Formato de datos incorrecto.");
                     }
                 }
             });
-
+            
             function showChampions(champions) {
                 let container = $(".container");
                 container.empty();
@@ -228,37 +304,41 @@
                         '<img src="' + champion.imagen + '" alt="' + champion.nombre + '">' +
                         '<div class="champion-name">' + champion.nombre + '</div>' +
                         '</div>');
-                    
-                    let img = championElement.find("img");
-                    img.on("load", function () {
-                        championElement.find(".loading-spinner").remove();
-                        $(this).css("opacity", "1");
+                        
+                        let img = championElement.find("img");
+                        img.on("load", function () {
+                            championElement.find(".loading-spinner").remove();
+                            $(this).css("opacity", "1");
+                        });
+                        container.append(championElement);
                     });
-                    container.append(championElement);
-                });
-
-                $(".champion-container").click(function () {
-                    if ($(this).hasClass("suZona")) {
-                        let index = $(this).data("index");
-                        let videoUrl = campeones[index].enlace + "&autoplay=1" + "&mute=1";
-                        $("#video-frame").attr("src", videoUrl);
-                        $("#video-overlay").fadeIn();
+                    
+                    $(".champion-container").click(function () {
+                        if ($(this).hasClass("suZona")) {
+                            let index = $(this).data("index");
+                            let videoUrl = campeones[index].enlace + "&autoplay=1" + "&mute=1";
+                            $("#video-frame").attr("src", videoUrl);
+                            $("#video-overlay").fadeIn();
+                        }
+                    });
+                    
+                }
+                $(document).keydown(function (e) {
+                    if (e.key === "Escape") {
+                        $("#video-overlay").fadeOut();
+                        $("#video-frame").attr("src", "");
                     }
                 });
                 
-            }
-            $(document).keydown(function (e) {
-                if (e.key === "Escape") {
+                $(document).mousedown(function (e) {    
                     $("#video-overlay").fadeOut();
                     $("#video-frame").attr("src", "");
-                }
+                });
+                
+                $(".menu-toggle").click(function () {
+                    $(".dropdown-menu").slideToggle();
+                });
             });
-
-            $(document).mousedown(function (e) {    
-                $("#video-overlay").fadeOut();
-                $("#video-frame").attr("src", "");
-            });
-        });
-    </script>
-</body>
-</html>
+        </script>
+    </body>
+    </html>

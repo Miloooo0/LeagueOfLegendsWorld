@@ -84,4 +84,12 @@ $(document).ready(function () {
         $(".menu-toggle").click(function () {
             $(".dropdown-menu").slideToggle();
         });
+        
+        $("#search-bar").on("keyup", function() {
+            let searchText = $(this).val().toLowerCase();
+            $(".champion-container").each(function() {
+                let name = $(this).find(".champion-name").text().toLowerCase();
+                $(this).toggle(name.includes(searchText));
+            });
+        });
     });

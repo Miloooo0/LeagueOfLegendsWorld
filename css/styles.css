@@ -21,11 +21,13 @@ header {
     background-position: center;
     box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 1);
     height: 30vh;
-    transition: all 0.7s ease; 
+    transition: all 1.4s ease; 
     position: relative;
-}   
-header:hover {
     filter: brightness(0.5);
+}   
+
+header:hover {
+    filter: brightness(1);
     height: 75vh;
 }
 
@@ -35,13 +37,15 @@ header .header-logo {
     left: 50%;
     transform: translate(-50%, -50%);
     opacity: 0;
-    transition: all 1s ease;
+    transition: all 2s ease;
+    width: 120px; 
+    height: auto; 
 }
 
 header:hover .header-logo {
     opacity: 1;
     display: block; 
-    width: 150px; 
+    width: 100px; 
     height: auto; 
 }
 
@@ -322,7 +326,6 @@ header:hover .header-logo {
         width: 40%;
         max-width: 200px;
         padding: 20px;
-        margin: 20px 20px 20px 20vw;
         font-size: 16px;    
     }     
 }

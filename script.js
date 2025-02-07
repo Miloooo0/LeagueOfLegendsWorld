@@ -59,7 +59,7 @@ $(document).ready(function () {
             "Runaterra": "./img/headers/logo/runaterra-logo.png"
         };
         if (imagenHeader[regionSeleccionada]) {
-            $("header").slideUp(100, function() {
+            $("header").slideUp(500, function() {
                 $(this).css("background-image", `url(${imagenHeader[regionSeleccionada]})`).slideDown(500);
                 $(this).css("background-size", "cover");
                 $(this).css("background-position", "center");

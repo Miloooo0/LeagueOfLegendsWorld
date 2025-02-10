@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    let regiones = ["Runaterra", "Noxus", "Demacia", "Ixtal", "Islas de las Sombras", "Jonia", "Piltover", "Zaun", "Freljord", "Shurima", "Targon", "Aguas Estancadas", "El Vacío", "Ciudad de Bandle"];
+    let regiones = ["Inicio", "Runaterra", "Noxus", "Demacia", "Ixtal", "Islas de las Sombras", "Jonia", "Piltover", "Zaun", "Freljord", "Shurima", "Targon", "Aguas Estancadas", "El Vacío", "Ciudad de Bandle"];
     let campeones = [];
-    
+
     function generarNav() {
         let nav = $("nav");
         nav.empty();
@@ -19,13 +19,18 @@ $(document).ready(function () {
     function resaltarCampeones(regionSeleccionada) {
         $(".champion-container").removeClass("suZona");
         
+
         campeones.forEach(function(champion, index) {
+            if(regionSeleccionada === "Inicio") {
+                return;
+            }
             if (champion.zona !== regionSeleccionada) {
                 $(".champion-container").eq(index).addClass("suZona");
             }
         });
     
         let imagenHeader = {
+            "Inicio": "./img/headers/wallpaper.jpg",
             "Noxus": "./img/headers/noxus.jpg",
             "Demacia": "./img/headers/demacia.jpg",
             "Ixtal": "./img/headers/ixtal.jpg",
@@ -43,6 +48,7 @@ $(document).ready(function () {
         };
 
         let logoHeader = {
+            "Inicio": "./img/headers/logo/runaterra-logo.png",
             "Noxus": "./img/headers/logo/noxus-logo.png",
             "Demacia": "./img/headers/logo/demacia-logo.png",
             "Ixtal": "./img/headers/logo/ixtal-logo.png",
@@ -59,16 +65,16 @@ $(document).ready(function () {
             "Runaterra": "./img/headers/logo/runaterra-logo.png"
         };
         if (imagenHeader[regionSeleccionada]) {
-            $("header").fadeOut(0, function() {
-                $(this).css("background-image", `url(${imagenHeader[regionSeleccionada]})`).fadeIn(1500);
-                $(this).css("background-size", "cover");
-                $(this).css("background-position", "center");
-            });              
+            $("header").fadeOut(400, function () {
+                $(this).css("background-image", `url(${imagenHeader[regionSeleccionada]})`).fadeIn(600);
+            });
+
             $(".header-logo").attr("src", logoHeader[regionSeleccionada]);
         }
     }    
-    
-    generarNav();
+
+
+    generarNav();   
     
     $.ajax({
         type: "GET",

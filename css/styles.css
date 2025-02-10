@@ -95,11 +95,13 @@ header:hover .header-logo {
     overflow: hidden;
     border: 2px solid #ccc;
     border-radius: 6px;
+    filter: brightness(0.9);
     transition: transform 0.3s ease, border-color 0.5s ease;
     text-align: center;
 }
 
 .champion-container:hover {
+    filter: brightness(1);
     transform: scale(1.1);
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
 }

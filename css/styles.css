@@ -80,7 +80,7 @@ header:hover .header-logo {
     transition: background-color 0.5s ease, transform 1s ease;
 }
 .region-button:hover {
-    background-color: #56570000;
+    background-color: #d4d4d4c4;
     transform: scale(1.1);
 }
 .region-button.active {

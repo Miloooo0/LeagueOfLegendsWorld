@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galería de Champeones</title>
+    <title>Galería</title>
     <link rel="shortcut icon" href="img/headers/logo/runaterra-logo.png" type="image/x-icon">
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-<header>
-    <img class="header-logo" src="img/headers/logo/runaterra-logo.png" alt="Logo">
-</header>
-<nav class="big-screen"></nav>
+    <!-- Imagen de la cabecera por defecto-->
+    <header>
+        <img class="header-logo" src="img/headers/logo/runaterra-logo.png" alt="Logo">
+    </header>
+    <!-- Nav para pantallas grandes -->
+    <nav class="big-screen"></nav>
+    <!-- Menú hamburguesa para pantallas pequeñas con un dropdown -->
     <div class="menu-toggle">
         <div class="burger-icon">
             <label class="burger" for="burger">
@@ -20,21 +23,26 @@
             </label>
         </div>
     </div>
+    <!-- Dropdown para seleccionar regiones -->
     <nav class="dropdown-menu"></nav>    
+    <!-- Barra de búsqueda de campeones -->
     <div class="form__group field">
         <input type="input" class="form__field" id="search-bar" placeholder="Buscar Campeones" required="">
         <label for="name" class="form__label">Buscar Campeones</label>
     </div>  
+    <!-- Contenedor principal -->
     <div class="container"></div>
+    <!-- Superposición de video -->
     <div id="video-overlay">
         <div id="video-container">
             <iframe id="video-frame" src="" allowfullscreen></iframe>
         </div>
         <div id="close-message">TOCA FUERA DEL VIDEO O ESC PARA SALIR</div>
     </div>
-        <div class="nubes-container">
+    <!-- Animacion de nubes -->
+    <div class="nubes-container">
         <div class="nubes"></div>    
     </div>
-    </body>
-    <script src="script.js"></script>
-    </html>
+</body>
+<script src="script.js"></script>
+</html>

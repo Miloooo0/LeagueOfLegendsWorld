@@ -1,3 +1,4 @@
+/* Estilos generales e imagen de fondo */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -8,6 +9,7 @@ body {
     background-position: center;
     background-attachment: fixed; 
 }
+/* Oculta el nav y el dropdown de pantallas pequeñas por defecto en pantallas grandes */
 .menu-toggle {
     display: none;
 }
@@ -15,6 +17,7 @@ body {
     display: none;
 }
 
+/* Header y su transición al cambiar la imagen  */
 header {
     background-image: url("../img/headers/wallpaper.jpg");
     background-size: cover;
@@ -26,6 +29,7 @@ header {
     filter: brightness(0.5);
 }   
 
+/* Animación para que al pasar por encima el ratón se haga mas grande */
 header:hover {
     filter: brightness(1);
     height: 75vh;
@@ -42,6 +46,7 @@ header .header-logo {
     height: auto; 
 }
 
+/* Animación para que al pasar por encima del HEADER el ratón aparezca el logo */ 
 header:hover .header-logo {
     opacity: 1;
     display: block; 
@@ -49,6 +54,7 @@ header:hover .header-logo {
     height: auto; 
 }
 
+/* Nav en pantallas grandes */
 .big-screen {
     display: flex;
     flex-wrap: wrap;
@@ -61,6 +67,7 @@ header:hover .header-logo {
     box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 1);
 }
 
+/* Botones de las regiones y su transicion al pasar el raton por encima y al pulsarlos */
 .region-button {
     color: white;
     background-color: #56570000;
@@ -81,6 +88,7 @@ header:hover .header-logo {
     color: white;
 }
 
+/* Animación para el video al abrirse */
 .animated-effect-2 {
     animation: slideLeft 1.2s ease;
 }
@@ -96,6 +104,7 @@ header:hover .header-logo {
     }
 }
 
+/* Nubes y su contenedor */
 .nubes-container {
     position: absolute;
     top: 0;
@@ -119,6 +128,7 @@ header:hover .header-logo {
     z-index: -100;
 }
 
+/* Animacion de nubes */
 @keyframes moverNubes {
     from {
         transform: translateX(0);
@@ -128,12 +138,15 @@ header:hover .header-logo {
     }
 }
 
+/* Contenedor de campeones */
 .container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     margin-top: 20px;
 }
+
+/* Contenedor por campeon, su hover y contenedores dentro de este mismo */
 .champion-container {
     background-color: #f5f5f5 ;
     width: 400px;
@@ -168,6 +181,7 @@ header:hover .header-logo {
     color: #333;
     background-color: #f5f5f5;
 }
+/* Loader por si las imagenes tardan en cargar */
 .loading-spinner {
     position: absolute;
     top: 50%;
@@ -184,6 +198,8 @@ header:hover .header-logo {
     0% { transform: translate(-50%, -50%) rotate(0deg); }
     100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
+
+/* Clases para campeones seleccionados */
 .suZona img {
     filter: grayscale(100%);
 }
@@ -206,6 +222,8 @@ header:hover .header-logo {
     50% { transform: scale(1.05); filter: brightness(1);}
     100% { transform: scale(1); filter: brightness(0.5);}
 }
+
+/* Video y su mensaje para cerrarlo */
 
 #video-overlay {
     position: fixed;
@@ -234,6 +252,8 @@ header:hover .header-logo {
     color: white;
     font-size: 18px;
 }
+
+/* Formulario y campo de texto para el buscador */
 
 .form__group {
     position: relative;
@@ -298,6 +318,7 @@ header:hover .header-logo {
     box-shadow: none;
 }
 
+/* Estilos para pantallas pequeñas */
 @media screen and (max-width: 960px) {
     header {
         height: 25vh;
@@ -308,6 +329,7 @@ header:hover .header-logo {
         font-weight: bold;
         padding: 15px;
     }   
+    /* Reduzco los campeones que se muestran por fila */
     .champion-container {
         background-color: #f5f5f5 ;
         width: 200px;
@@ -342,12 +364,15 @@ header:hover .header-logo {
         padding: 20px;
         border-radius: 10px;
     }
+
     #video-container iframe {
-        width: 60vw;
-        height: 30vh;
+        width: 100%;
+        height: auto;
+        transform: translateY(200%);
         border: none;
     }
-    
+
+    /* Boton de hamburguesa para mostrar nav */
     .burger {
         background-color: rgba(255, 255, 255, 0.671);
         width: 40px;
@@ -386,6 +411,7 @@ header:hover .header-logo {
         position: absolute;
     }       
     
+    /* Campo de texto */
     .form__group {
         position: relative;
         width: 40%;

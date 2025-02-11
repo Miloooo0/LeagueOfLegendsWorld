@@ -105,6 +105,7 @@ $(document).ready(function () {
             $(".champion-container").click(function () {
                 if ($(this).hasClass("suZona")) {
                     $(".big-screen").css("z-index", "0");
+                    $("#video-overlay").addClass("animated-effect-2");
                     let index = $(this).data("index");
                     let videoUrl = campeones[index].enlace + "&autoplay=1" + "&mute=1";
                     $("#video-frame").attr("src", videoUrl);
